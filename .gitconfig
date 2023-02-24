@@ -1,0 +1,16 @@
+[user]
+    name = Rachel King
+[filter "media"]
+    clean = git-media-clean %f
+    smudge = git-media-smudge %f
+[url "ssh://git@github.com/"]
+    insteadOf = https://github.com/
+[push]
+    default = simple
+[alias]
+    co=checkout
+    br=branch
+    cam=commit --all -m
+    amend=commit --amend --no-edit --all
+[core]
+    editor = subl -n -w
