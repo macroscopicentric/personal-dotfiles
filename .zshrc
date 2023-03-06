@@ -44,7 +44,8 @@ autoload -Uz compinit && compinit
 
 alias be="bundle exec"
 
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+# start rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init - zsh)"; fi
 
 # start pyenv
 eval "$(pyenv init -)"
