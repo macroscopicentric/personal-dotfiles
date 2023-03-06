@@ -60,20 +60,14 @@ eval "$(pyenv virtualenv-init -)"
 #   rachel@Rachels-MacBook-Pro .zsh % echo $PROMPT
 #   %n@%m %1~ %# 
 
-# grab current branch and display in prompt
-# source: https://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Zsh
-autoload -Uz vcs_info add-zsh-hook
-precmd_vcs_info() { vcs_info }
-precmd_functions+=( precmd_vcs_info )
+# source the git-provided git prompt
+# source: https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
+source ~/.git-prompt.sh
+
+# allow prompt substitution, show dirty state in color (incl. untracked files), define prompt
+# source: same script as above
 setopt prompt_subst
-
-# These lines are specifically for staged + unstaged changes
-# source: https://salferrarello.com/zsh-git-status-prompt/
-add-zsh-hook precmd vcs_info
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' unstagedstr ' *'
-zstyle ':vcs_info:*' stagedstr ' +'
-
-zstyle ':vcs_info:git:*' formats '(%b%u%c)'
-
-PROMPT='%B%F{magenta}%1/%f%b ${vcs_info_msg_0_} 👑 '
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWCOLORHINTS=1
+GIT_PS1_SHOWUNTRACKEDFILES=1
+precmd () { __git_ps1 "%B%F{magenta}%1/%f%b" "👑 " "|%s " }
