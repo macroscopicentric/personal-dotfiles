@@ -70,4 +70,4 @@ setopt prompt_subst
 GIT_PS1_SHOWDIRTYSTATE=1
 GIT_PS1_SHOWCOLORHINTS=1
 GIT_PS1_SHOWUNTRACKEDFILES=1
-precmd () { __git_ps1 "%B%F{magenta}%1/%f%b" "👑 " "|%s " }
+precmd () { __git_ps1 "%B%F{magenta}%1/%f%b " "👑 " "| %s " }
