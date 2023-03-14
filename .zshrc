@@ -25,7 +25,9 @@ else
 fi
 
 # check for bat (installed via brew), use that to syntax-highlight man pages
-if [ command -v bat &>/dev/null ]; then
+if command -v bat &>/dev/null; then
+    export BAT_THEME="ansi"
+    alias cat='bat'
     export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 fi
 
