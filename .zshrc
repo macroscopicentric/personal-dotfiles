@@ -33,6 +33,9 @@ fi
 
 #
 # Extra work to load git autocomplete for zsh (from https://www.oliverspryn.com/blog/adding-git-completion-to-zsh)
+# This should also load poetry autocomplete for zsh if poetry is installed
+# (see note in .zshenv for doc link, I modified the path on install from
+# .zfunc to .zsh to match this pre-existing dir).
 #
 zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
 fpath=(~/.zsh $fpath)
