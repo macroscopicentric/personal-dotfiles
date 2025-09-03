@@ -1,3 +1,38 @@
+[alias]
+    amend=commit --amend --no-edit --all
+    boom = reset HEAD~ --hard
+    br=branch
+    cam=commit --all -m
+    co=checkout
+    # difftastic doesn't play well with piping/making a patch, just meant for human consumption
+    # adding another alias to give some reasonable output for piping through to pbcopy
+    dpatch = diff --no-ext-diff
+    rpull = pull --rebase
+    # pilfered from phil:
+    tldr = log --pretty='%C(Yellow)%h  %C(reset)%ad %C(Cyan)%an: %C(reset)%<(50,trunc)%s' --date=short -10
+    undo = reset HEAD~
+[branch]
+    # default is alphabetical, this is reverse chronological order
+    sort = -committerdate
+[commit]
+    # this and a couple of other things are pilfered from 
+    # https://blog.gitbutler.com/how-git-core-devs-configure-git/
+    verbose = true
+[diff]
+    # difftastic, brew installed
+    external = difft
+[fetch]
+    prune = true
+[help]
+    autocorrect = prompt
+[pager]
+    # Use a pager if the difftool output is larger than one screenful,
+    # consistent with the behaviour of `git diff`.
+    difftool = true
+[pull]
+    rebase = true
+[push]
+    autoSetupRemote = true
 [user]
     name = Rachel King
 [filter "media"]
@@ -7,10 +42,5 @@
     insteadOf = https://github.com/
 [push]
     default = simple
-[alias]
-    co=checkout
-    br=branch
-    cam=commit --all -m
-    amend=commit --amend --no-edit --all
 [core]
-    editor = subl -n -w
+    editor = vim

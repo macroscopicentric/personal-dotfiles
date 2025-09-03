@@ -2,8 +2,17 @@
 # Aliases
 #
 
+alias ltree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'"
+
 alias gst="git status"
 alias gd="git diff"
+
+alias dup="docker compose up -d"
+alias ddown="docker compose down"
+alias dprune="docker system prune --all --force"
+
+alias work="cd ~/coding/squadformers"
+alias tinker="ssh rachel@cs644.iafisher.com"
 
 #
 # Fancy Brew-Installed Stuff
@@ -17,9 +26,9 @@ if type brew &>/dev/null; then
     compinit
 fi
 
-# check for exa (installed via brew), gives fancier ls output
-if command -v exa &>/dev/null; then
-    alias ll="exa --long --classify --all"
+# check for eza (installed via brew), gives fancier ls output
+if command -v eza &>/dev/null; then
+    alias ll="eza --long --all"
 else
     alias ll="ls -al"
 fi
@@ -56,6 +65,11 @@ if which rbenv > /dev/null; then eval "$(rbenv init - zsh)"; fi
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
 #
 # Prompt Shenanigans
 # Most basic info pulled from https://scriptingosx.com/2019/07/moving-to-zsh-06-customizing-the-zsh-prompt/
@@ -76,3 +90,9 @@ GIT_PS1_SHOWDIRTYSTATE=1
 GIT_PS1_SHOWCOLORHINTS=1
 GIT_PS1_SHOWUNTRACKEDFILES=1
 precmd () { __git_ps1 "%B%F{magenta}%1/%f%b " "👑 " "| %s " }
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
+export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)

@@ -1,0 +1,6 @@
+{
+	"auths": {},
+	"credsStore": "desktop",
+	"currentContext": "desktop-linux",
+	"psFormat": "table {{.ID}}\\t{{.Names}}\\t{{.Status}}\\t{{.Ports}}"
+}
