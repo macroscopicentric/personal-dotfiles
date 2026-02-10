@@ -1,4 +1,10 @@
 #
+# Secrets and Local-Only Management
+#
+
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+#
 # Aliases
 #
 
@@ -11,8 +17,15 @@ alias dup="docker compose up -d"
 alias ddown="docker compose down"
 alias dprune="docker system prune --all --force"
 
-alias work="cd ~/coding/squadformers"
-alias tinker="ssh rachel@cs644.iafisher.com"
+alias work="cd ~/coding/aligned"
+alias docker-sp="cd ~/coding/aligned/sp-all-in-one && docker compose up --build --scale sp-fe=0"
+alias docker-sp-local="cd ~/coding/aligned/sp-all-in-one && SPRING_M3SERVICE_BASEURL=http://host.docker.internal:8084 docker-sp"
+alias db-sp="psql service=sp-local"
+
+# Frontend aliases
+alias sp-fe-dev="cd ~/coding/aligned/sp-all-in-one/sp-fe && ng serve --configuration=local"
+alias sp-fe-local="cd ~/coding/aligned/sp-all-in-one/sp-fe && ng serve --configuration=compose"
+
 
 #
 # Fancy Brew-Installed Stuff
@@ -56,19 +69,34 @@ autoload -Uz compinit && compinit
 # Language-Specific Stuff
 #
 
-alias be="bundle exec"
-
-# start rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init - zsh)"; fi
-
-# start pyenv
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# bitbucket
+# usage: git diff | bbsnippet "snippet title" "filename"
+export BITBUCKET_WORKSPACE="waterworks"
+export BITBUCKET_USER="rachel@squadformers.com"
+bbsnippet() {
+  local title="${1:-Untitled}"
+  local filename="${2:-snippet.txt}"
+  curl -s -X POST \
+    -u "${BITBUCKET_USER}:${BITBUCKET_TOKEN}" \
+    -F "title=${title}" \
+    -F "file=@-;filename=${filename}" \
+    -F "is_private=true" \
+    "https://api.bitbucket.org/2.0/snippets/${BITBUCKET_WORKSPACE}" \
+  | jq -r '.links.html.href'
+}
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+# python
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# ruby
+alias be="bundle exec"
+if which rbenv > /dev/null; then eval "$(rbenv init - zsh)"; fi
 
 #
 # Prompt Shenanigans
@@ -91,8 +119,5 @@ GIT_PS1_SHOWCOLORHINTS=1
 GIT_PS1_SHOWUNTRACKEDFILES=1
 precmd () { __git_ps1 "%B%F{magenta}%1/%f%b " "👑 " "| %s " }
 
-. "$HOME/.atuin/bin/env"
-
-eval "$(atuin init zsh)"
-export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:/opt/homebrew/opt/openjdk@17/bin:$PATH"
 export JAVA_HOME=$(/usr/libexec/java_home -v 17)
