@@ -36,7 +36,13 @@ Always pause to critically evaluate your response before finalizing it. This pre
 - Ask for clarification instead of making assumptions
 
 ## Process and workflow preferences
-Never make git commits, always let the user commit manually.
+Git branches should be named `rking-proj-123` (ex: `rking-qom-1029`) if there's a ticket number, or `rking-short-description` if there's not (ex: `rking-add-common-command`). Never make git commits, always let the user commit manually.
+
+Always work from /Users/rachel/coding/aligned — never cd or search outside this directory without explicit instruction.
+
+Check ~/.claude/settings.json before requesting elevated agent modes — existing allow rules cover .antfarm, .beads, and reading within ~/coding/aligned/.
+
+Use 'bd' for task tracking.
 
 ### Context Management
 
