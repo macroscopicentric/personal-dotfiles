@@ -10,6 +10,10 @@
 
 alias ltree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'"
 
+# Claude accounts: c = personal, ca = work (aligned)
+alias c="CLAUDE_CONFIG_DIR=~/.claude-personal claude"
+alias ca="CLAUDE_CONFIG_DIR=~/.claude-aligned claude"
+
 alias gst="git status"
 alias gd="git diff"
 
@@ -18,14 +22,18 @@ alias ddown="docker compose down"
 alias dprune="docker system prune --all --force"
 
 alias work="cd ~/coding/aligned"
-alias docker-sp="cd ~/coding/aligned/sp-all-in-one && docker compose up --build --scale sp-fe=0"
-alias docker-sp-local="cd ~/coding/aligned/sp-all-in-one && SPRING_M3SERVICE_BASEURL=http://host.docker.internal:8084 docker-sp"
-alias db-sp="psql service=sp-local"
 
-# Frontend aliases
-alias sp-fe-dev="cd ~/coding/aligned/sp-all-in-one/sp-fe && ng serve --configuration=local"
-alias sp-fe-local="cd ~/coding/aligned/sp-all-in-one/sp-fe && ng serve --configuration=compose"
+# _find_sp_all_in_one, docker-sp, docker-sp-local, sp-fe-dev, sp-fe-local
+# are defined in .zshenv so they work in non-interactive shells too.
 
+alias db-sp-local="psql service=sp-local"
+alias db-sp-dev="psql service=sp-dev"
+alias db-sp-stg="psql service=sp-stg"
+
+#
+# Homebrew (ARM-native, /opt/homebrew takes precedence over x86 /usr/local)
+#
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 #
 # Fancy Brew-Installed Stuff
@@ -72,12 +80,12 @@ autoload -Uz compinit && compinit
 # bitbucket
 # usage: git diff | bbsnippet "snippet title" "filename"
 export BITBUCKET_WORKSPACE="waterworks"
-export BITBUCKET_USER="rachel@squadformers.com"
+export BITBUCKET_EMAIL="rachel@aligned.team"
 bbsnippet() {
   local title="${1:-Untitled}"
   local filename="${2:-snippet.txt}"
   curl -s -X POST \
-    -u "${BITBUCKET_USER}:${BITBUCKET_TOKEN}" \
+    -u "${BITBUCKET_EMAIL}:${BITBUCKET_API_TOKEN}" \
     -F "title=${title}" \
     -F "file=@-;filename=${filename}" \
     -F "is_private=true" \
@@ -120,4 +128,17 @@ GIT_PS1_SHOWUNTRACKEDFILES=1
 precmd () { __git_ps1 "%B%F{magenta}%1/%f%b " "👑 " "| %s " }
 
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:/opt/homebrew/opt/openjdk@17/bin:$PATH"
-export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+
+# bun completions
+[ -s "/Users/rachel/.bun/_bun" ] && source "/Users/rachel/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# libpq
+export PATH="/usr/local/opt/libpq/bin:$PATH"
+export CDPATH="$HOME/coding/qom-meta-worktrees:$CDPATH"
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+

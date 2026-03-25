@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(/Users/rachel/.zshrc)"
+    ],
+    "deny": [
+      "Read(/Users/rachel/.zshrc.local)"
+    ]
+  },
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true,
+    "elements-of-style@superpowers-marketplace": true,
+    "iterm2-tab-status@jaspersui-marketplace": true
+  },
+  "extraKnownMarketplaces": {
+    "jaspersui-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "JasperSui/jaspersui-marketplace"
+      }
+    }
+  }
+}
