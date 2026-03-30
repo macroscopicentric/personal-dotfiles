@@ -7,6 +7,24 @@
       "Read(/Users/rachel/.zshrc.local)"
     ]
   },
+  "model": "opus",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"High-miss skill (personal): `retrospective` - if you have used the same category of action (DB query, file read, search, API/MCP call, service restart) 5+ times in a row, OR cycled through the same sequence of actions more than once without net progress.\"}}'"
+          },
+          {
+            "type": "command",
+            "command": "/Users/rachel/.claude/hooks/record-user-activity.sh"
+          }
+        ]
+      }
+    ]
+  },
   "enabledPlugins": {
     "superpowers@claude-plugins-official": true,
     "elements-of-style@superpowers-marketplace": true,
