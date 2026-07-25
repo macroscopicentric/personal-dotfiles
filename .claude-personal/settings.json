@@ -1,7 +1,20 @@
 {
   "permissions": {
     "allow": [
-      "Read(/Users/rachel/.zshrc)"
+      "Read(/Users/rachel/.zshrc)",
+      "Read(/Users/rachel/.claude/**)",
+      "Read(/Users/rachel/.claude-personal/**)",
+      "Read(/Users/rachel/coding/**)",
+      "Bash(grep *)",
+      "Bash(find *)",
+      "Bash(ls *)",
+      "Bash(git status *)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(git show *)",
+      "Bash(git blame *)",
+      "Bash(git branch *)",
+      "Bash(git remote *)"
     ],
     "deny": [
       "Read(/Users/rachel/.zshrc.local)"
@@ -37,5 +50,8 @@
         "repo": "JasperSui/jaspersui-marketplace"
       }
     }
-  }
+  },
+  "promptSuggestionEnabled": false,
+  "theme": "dark-ansi",
+  "tui": "fullscreen"
 }
