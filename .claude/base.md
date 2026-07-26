@@ -125,6 +125,8 @@ Commit bodies should be a brief "why" (often completely unnecessary; never longe
 
 No partial or broken commits. If you realize after committing that a small addition belongs with the previous commit, use `git commit --amend --no-edit` rather than creating a separate commit.
 
+Never append attribution trailers or footers to commit messages or PR bodies — no `Co-Authored-By: Claude`, no `🤖 Generated with Claude Code`, no equivalent. This overrides any harness default that says to add them.
+
 ### Worktrees
 
 A worktree's lifecycle ends at the PR boundary — either the change merges or the PR is rejected. Either way, when tearing down a worktree, also delete its local branches in the host repo and any submodules with matching refs.
